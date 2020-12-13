@@ -7,6 +7,7 @@ import (
 	"github.com/micro/go-micro/client/selector"
 	"github.com/micro/go-micro/registry"
 	"github.com/micro/go-plugins/registry/consul"
+	"gomicro/datamodels"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -19,13 +20,14 @@ func callAPI2(s selector.Selector) {
 		client.Selector(s),
 		client.ContentType("application/json"),
 	)
-	req := myClient.NewRequest("gomicroservice","/v1/prods",map[string]int{"size":4})
-	var rsp map[string]interface{}
+	req := myClient.NewRequest("gomicroservice","/v1/prods",
+		datamodels.ProdsRequest{Size:3})
+	var rsp datamodels.ProdListResponse
 	err := myClient.Call(context.Background(),req,&rsp)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(rsp["data"])
+	fmt.Println(rsp.GetData())
 }
 
 //原始调用方式

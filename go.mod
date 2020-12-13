@@ -5,7 +5,7 @@ go 1.14
 require (
 	github.com/armon/go-metrics v0.3.5-0.20201104215618-6fd5a4ddf425 // indirect
 	github.com/gin-gonic/gin v1.6.3
-	github.com/golang/protobuf v1.3.5 // indirect
+	github.com/golang/protobuf v1.4.3
 	github.com/google/go-cmp v0.5.2 // indirect
 	github.com/hashicorp/consul/api v1.8.1 // indirect
 	github.com/hashicorp/go-hclog v0.14.1 // indirect
@@ -27,4 +27,5 @@ require (
 	golang.org/x/text v0.3.3 // indirect
 	golang.org/x/time v0.0.0-20200630173020-3af7569d3a1e // indirect
 	golang.org/x/tools v0.0.0-20200513154647-78b527d18275 // indirect
+	google.golang.org/protobuf v1.23.0
 )
