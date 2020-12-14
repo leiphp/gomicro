@@ -4,6 +4,7 @@ go 1.14
 
 require (
 	github.com/armon/go-metrics v0.3.5-0.20201104215618-6fd5a4ddf425 // indirect
+	github.com/favadi/protoc-go-inject-tag v1.1.0 // indirect
 	github.com/gin-gonic/gin v1.6.3
 	github.com/golang/protobuf v1.4.3
 	github.com/google/go-cmp v0.5.2 // indirect
