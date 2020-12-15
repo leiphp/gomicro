@@ -6,12 +6,12 @@ import (
 	"github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/client/selector"
 	"github.com/micro/go-micro/registry"
+	myhttp "github.com/micro/go-plugins/client/http"
 	"github.com/micro/go-plugins/registry/consul"
-	"gomicro/datamodels"
+	"gomicro/bat/datamodels"
 	"io/ioutil"
 	"log"
 	"net/http"
-	myhttp "github.com/micro/go-plugins/client/http"
 )
 
 //
@@ -21,7 +21,7 @@ func callAPI2(s selector.Selector) {
 		client.ContentType("application/json"),
 	)
 	req := myClient.NewRequest("gomicroservice","/v1/prods",
-		datamodels.ProdsRequest{Size:3})
+		datamodels.ProdsRequest{Size: 3})
 	var rsp datamodels.ProdListResponse
 	err := myClient.Call(context.Background(),req,&rsp)
 	if err != nil {
