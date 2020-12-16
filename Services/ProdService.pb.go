@@ -30,7 +30,8 @@ type ProdsRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Size int32 `protobuf:"varint,1,opt,name=size,proto3" json:"size,omitempty"`
+	// @inject_tag: json:"size",form:"size"
+	Size int32 `protobuf:"varint,1,opt,name=size,proto3" json:"size" form:"size"`
 }
 
 func (x *ProdsRequest) Reset() {
