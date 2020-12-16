@@ -1,7 +1,11 @@
 package main
 
 import (
+	"context"
+	"fmt"
 	"github.com/micro/go-micro"
+	"github.com/micro/go-micro/client"
+	"github.com/micro/go-micro/metadata"
 	"github.com/micro/go-micro/registry"
 	"github.com/micro/go-micro/web"
 	"github.com/micro/go-plugins/registry/consul"
@@ -9,13 +13,30 @@ import (
 	"gomicro/Weblib"
 )
 
+type logWrapper struct {
+	client.Client
+}
+
+func(this *logWrapper) Call(ctx context.Context, req client.Request, rsp interface{}, opts ...client.CallOption) error{
+	md, _ := metadata.FromContext(ctx)
+	fmt.Printf("[Log Wrapper] ctx: %v service: %s method: %s\n", md, req.Service(), req.Endpoint())
+	return this.Client.Call(ctx,req,rsp)
+}
+
+func NewLogWrapper(c client.Client) client.Client {
+	return &logWrapper{c}
+}
+
 func main(){
 	//注册服务到consul
 	 consulReg := consul.NewRegistry(
 		registry.Addrs("192.168.1.104:8500"),
 	)
 
-	myService := micro.NewService(micro.Name("prodservice.client"))
+	myService := micro.NewService(
+		micro.Name("prodservice.client"),
+		micro.WrapClient(NewLogWrapper),
+		)
 	prodService := Services.NewProdService("prodservice",myService.Client())
 	httpServer := web.NewService(
 		web.Name("httpservice"),
