@@ -15,8 +15,8 @@ func main(){
 		registry.Addrs("192.168.1.104:8500"),
 	)
 
-	myService := micro.NewService(micro.Name("grpcservice.client"))
-	prodService := Services.NewProdService("grpcservice",myService.Client())
+	myService := micro.NewService(micro.Name("prodservice.client"))
+	prodService := Services.NewProdService("prodservice",myService.Client())
 	httpServer := web.NewService(
 		web.Name("httpservice"),
 		web.Address(":8001"),
@@ -24,11 +24,7 @@ func main(){
 		//web.Metadata(map[string]string{"protocol": "http"}), // 添加这行代码
 		web.Registry(consulReg),
 	)
-
-
-
-
-
+	
 	httpServer.Init()
 	httpServer.Run()
 }
