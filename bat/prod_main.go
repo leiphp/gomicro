@@ -5,8 +5,7 @@ import (
 	"github.com/micro/go-micro/registry"
 	"github.com/micro/go-micro/web"
 	"github.com/micro/go-plugins/registry/consul"
-	"gomicro/helpers"
-	"gomicro/services"
+	"gomicro/bat/helpers"
 )
 
 func main(){

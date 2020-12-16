@@ -5,7 +5,23 @@ import (
 	"github.com/afex/hystrix-go/hystrix"
 	"github.com/gin-gonic/gin"
 	"gomicro/Services"
+	"strconv"
 )
+//测试方法
+func newProd(id int32,pname string) *Services.ProdModel {
+	return &Services.ProdModel{ProdID: id,ProdName:pname}
+}
+
+func defaultProds() (*Services.ProdListResponse,error) {
+	models := make([]*Services.ProdModel,0)
+	var i int32
+	for i = 0; i < 5; i ++ {
+		models = append(models,newProd(20+i,"prodname"+strconv.Itoa(100+int(i))))
+	}
+	res:=&Services.ProdListResponse{}
+	res.Data=models
+	return res,nil
+}
 
 //gin的方法部分
 func GetProdsList(ginCtx *gin.Context)  {
@@ -31,7 +47,10 @@ func GetProdsList(ginCtx *gin.Context)  {
 		err := hystrix.Do("getprods",func() error {
 			prodRes,err = prodService.GetProdsList(context.Background(),&prodReq)
 			return err
-		},nil)
+		}, func(e error) error {
+			prodRes,err = defaultProds()
+			return err
+		})
 		if err != nil {
 			ginCtx.JSON(500,gin.H{"status":err.Error()})
 		}else{
