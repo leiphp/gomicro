@@ -6,7 +6,22 @@ import (
 	"gomicro/Services"
 )
 
-//gin的方法部分
+func PanicIfError(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
+//gin的方法部分,获取商品详情
+func GetProdsDetail(ginCtx *gin.Context)  {
+	var prodReq Services.ProdsRequest
+	PanicIfError(ginCtx.BindUri(&prodReq))
+	prodService := ginCtx.Keys["prodservice"].(Services.ProdService)
+	resp,_ := prodService.GetProdsDetail(context.Background(),&prodReq)
+	ginCtx.JSON(200,gin.H{"data":resp.Data})
+}
+
+//gin的方法部分,获取商品列表
 func GetProdsList(ginCtx *gin.Context)  {
 	prodService := ginCtx.Keys["prodservice"].(Services.ProdService)
 	var prodReq Services.ProdsRequest
