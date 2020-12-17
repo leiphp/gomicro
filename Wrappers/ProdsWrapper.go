@@ -17,9 +17,9 @@ func(this *ProdsWrapper) Call(ctx context.Context, req client.Request, rsp inter
 	configA := hystrix.CommandConfig{
 		Timeout:                2000,
 		MaxConcurrentRequests:  0,
-		RequestVolumeThreshold: 0,
-		SleepWindow:            0,
-		ErrorPercentThreshold:  0,
+		RequestVolumeThreshold: 2,//请求阀值
+		SleepWindow:            5000,//熔断再次监测是否开启
+		ErrorPercentThreshold:  50,//错误百分比
 	}
 	hystrix.ConfigureCommand(cmdName,configA)
 	return hystrix.Do(cmdName, func() error {
