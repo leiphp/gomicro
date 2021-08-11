@@ -31,7 +31,7 @@ func NewLogWrapper(c client.Client) client.Client {
 func main(){
 	//注册服务到consul
 	 consulReg := consul.NewRegistry(
-		registry.Addrs("192.168.1.104:8500"),
+		registry.Addrs("127.0.0.1:8500"),
 	)
 
 	myService := micro.NewService(
